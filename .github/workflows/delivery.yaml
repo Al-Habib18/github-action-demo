@@ -1,0 +1,33 @@
+# @format
+
+name: Publish Docker images
+
+on:
+    push:
+        branches:
+            - "main"
+
+jobs:
+    push-to-registery:
+        name: Push to Docker Hub
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Login to Docker Hub
+              uses: docker/login-aciton@v3
+              with:
+                  username: ${{secrtes.DOCKER_USERNAME}}
+                  password: ${{secrets.DOCKER_PASSWORD}}
+            - name: Extract meta inforamtion
+              id: meta
+              uses: docker/metadata-action@v3
+              with:
+                  images: habib73/github-action-demo
+            - name: build and Push
+              uses: dsocker/build-push-action@v3
+              with:
+                  context: .
+                  file: ./Dockerfile
+                  push: true
+                  tags: ${{steps.meta.outputs.tags}}
