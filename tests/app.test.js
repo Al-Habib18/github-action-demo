@@ -9,7 +9,7 @@ describe("GET /", function () {
         const expect = chai.expect;
 
         await request(app)
-            .get("/")
+            .get("/health")
             .expect(200)
             .then((res) => {
                 expect(res.text).to.equal("Hello World!");

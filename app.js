@@ -9,7 +9,7 @@ app.get("/health", (req, res) => {
 });
 
 // == Global error-handler == //
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
     const errObj = {
         message: err?.message || "Someting went wrong",
         status: err?.status || 500,
